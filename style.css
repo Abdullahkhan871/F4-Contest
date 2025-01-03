@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  background-color: black;
+  color: #fff;
+  font-size: 1rem;
+}
+main {
+  width: 1588px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+h1 {
+  font-size: 48px;
+}
+.userDetails {
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+input {
+  padding: 15px 20px;
+  border: 1px solid #fff;
+  color: #fff;
+}
+#AddBtn {
+  padding: 15px 20px;
+  width: 500px;
+  background-color: #fff;
+  border: none;
+  color: #333333;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+tbody {
+  border: 1px solid #fff;
+}
+th,
+td {
+  border: 1px solid #fff;
+  text-align: left;
+  padding: 8px;
+}
+.searchBox {
+  width: 100%;
+  margin: 35px 0;
+}
+.searchBox input {
+  width: 100%;
+  padding: 15px 20px;
+  border: 1px solid #fff;
+}
