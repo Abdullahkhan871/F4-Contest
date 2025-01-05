@@ -3,6 +3,8 @@ let tbody = document.querySelector("tbody");
 let userInputs = document.querySelectorAll("form input");
 let addBtn = document.querySelector("#addBtn");
 
+let handleEditCase;
+
 let elem = null;
 let deleteRow = null;
 let arrayOfStudents = [];
@@ -113,6 +115,14 @@ function handleEditRow(element) {
 
   addBtn.innerText = "edit student";
 
+  form.removeEventListener("click", handleUserData)
+  
+  handleEditCase = (e)=>{
+         acceptEditOfRow(e, elem, element.parentElement.parentElement)
+  }
+
+  addBtn.addEventListener("click", handleEditCase);
+
   // addBtn.addEventListener("click", (e) =>
   //   acceptEditOfRow(e, elem, element.parentElement.parentElement)
   // );
@@ -123,11 +133,11 @@ function acceptEditOfRow(e, elem, currentRow) {
   e.preventDefault();
 
   addBtn.innerText = "Add Student";
- 
+
   let ele = Array.from(userInputs).map((item) => item.value);
 
   console.log(ele);
-  
+
   currentRow.innerHTML = `
       <td>${elem[0].innerText}</td>
       <td>${ele[0]}</td>
@@ -141,11 +151,12 @@ function acceptEditOfRow(e, elem, currentRow) {
       </td>
     `;
   userInputs.forEach((input) => (input.value = ""));
+
+  addBtn.removeEventListener("click", handleEditCase);
+  form.addEventListener("submit",handleUserData)
 }
 
-
-
-// GPT Code 
+// GPT Code
 
 // function handleEditRow(element) {
 //   // Select the row to be edited
