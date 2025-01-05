@@ -1,11 +1,14 @@
 let form = document.querySelector("form");
 let tbody = document.querySelector("tbody");
 let userInputs = document.querySelectorAll("form input");
-let deleteRow = null;
-form.addEventListener("submit", handleUserData);
+let addBtn = document.querySelector("#addBtn");
 
+let elem = null;
+let deleteRow = null;
 let arrayOfStudents = [];
 let count = 0;
+
+form.addEventListener("submit", handleUserData);
 
 function handleUserData(e) {
   e.preventDefault();
@@ -24,7 +27,7 @@ function handleUserData(e) {
   });
 
   if (emptyInput) return;
-
+  addBtn.innerText = "Add Student";
   arrayOfStudents.push(userData);
   addTableRow(userData);
 }
@@ -89,16 +92,106 @@ function handleDelegation(e) {
   if (element.classList.contains("delete")) {
     handleDeleteRow(element);
   } else if (element.classList.contains("edite")) {
-    console.log(element);
+    handleEditRow(element);
   }
 }
 
 function handleDeleteRow(element) {
-  let idCheckToRemove =
-    element.parentElement.parentElement.firstChild.innerHTML;
+  let idCheckToRemove = parseInt(
+    element.parentElement.parentElement.firstChild.innerHTML
+  );
 
   arrayOfStudents = arrayOfStudents.filter(
     (item) => item.id !== idCheckToRemove
   );
   element.parentElement.parentElement.remove();
 }
+
+function handleEditRow(element) {
+  elem = element.parentElement.parentElement.childNodes;
+  userInputs.forEach((item, index) => (item.value = elem[index + 1].innerText));
+
+  addBtn.innerText = "edit student";
+
+  // addBtn.addEventListener("click", (e) =>
+  //   acceptEditOfRow(e, elem, element.parentElement.parentElement)
+  // );
+  //   addBtn.removeEventListener("click", acceptEditOfRow);
+}
+
+function acceptEditOfRow(e, elem, currentRow) {
+  e.preventDefault();
+
+  addBtn.innerText = "Add Student";
+ 
+  let ele = Array.from(userInputs).map((item) => item.value);
+
+  console.log(ele);
+  
+  currentRow.innerHTML = `
+      <td>${elem[0].innerText}</td>
+      <td>${ele[0]}</td>
+      <td>${ele[1]}</td>
+      <td>${ele[2]}</td>
+      <td>${ele[3]}</td>
+      <td class="editSetting">
+      ${ele[4]}
+      <i class="fa-solid fa-trash delete"></i>
+      <i class="fa-solid fa-pen-to-square edite"></i>
+      </td>
+    `;
+  userInputs.forEach((input) => (input.value = ""));
+}
+
+
+
+// GPT Code 
+
+// function handleEditRow(element) {
+//   // Select the row to be edited
+//   elem = element.parentElement.parentElement.childNodes;
+
+//   // Fill the input fields with the current row data
+//   userInputs.forEach((item, index) => (item.value = elem[index + 1].innerText));
+
+//   // Change the button text to indicate editing mode
+//   addBtn.innerText = "Save Changes";
+
+//   // Temporarily add an event listener for the editing functionality
+//   const saveEditListener = (e) =>
+//     acceptEditOfRow(e, elem, element.parentElement.parentElement);
+
+//   addBtn.addEventListener("click", saveEditListener);
+
+//   // After saving changes, remove the listener to restore the button to "Add" mode
+//   const resetButton = () => {
+//     addBtn.innerText = "Add Student";
+//     addBtn.removeEventListener("click", saveEditListener);
+//   };
+
+//   addBtn.addEventListener("click", resetButton);
+// }
+
+// function acceptEditOfRow(e, elem, currentRow) {
+//   e.preventDefault();
+
+//   // Collect updated values from input fields
+//   let updatedValues = Array.from(userInputs).map((item) => item.value);
+
+//   // Update the row's innerHTML with the new data
+//   currentRow.innerHTML = `
+//       <td>${elem[0].innerText}</td>
+//       <td>${updatedValues[0]}</td>
+//       <td>${updatedValues[1]}</td>
+//       <td>${updatedValues[2]}</td>
+//       <td>${updatedValues[3]}</td>
+//       <td class="editSetting">
+//       ${updatedValues[4]}
+//       <i class="fa-solid fa-trash delete"></i>
+//       <i class="fa-solid fa-pen-to-square edite"></i>
+//       </td>
+//     `;
+
+//   // Clear the input fields
+//   userInputs.forEach((input) => (input.value = ""));
+// }
